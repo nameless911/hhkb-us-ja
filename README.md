@@ -116,6 +116,19 @@ VIA の文字が小さくて読みにくい、英語で分かりにくい、と�
 3. この文書は、上の技術の**先行技術(公知技術)の証拠**として公開しています。日本の特許法 29 条 1 項 3 号、実用新案法 3 条 1 項 3 号にいう「電気通信回線を通じて公衆に利用可能となった」技術として、また他の国・地域でも同じように扱われることを意図しています。
 4. この技術は、QMK の `LM()` キーや、Windows の Alt + `` ` `` による入力切り替えなど、**以前から公開されている機能の組み合わせ**です。公開者は自分が最初の考案者だとは主張しません。この文書の目的は、この組み合わせを誰かが独占できないように、記録をはっきり残すことです。
 
+### 2022 年に公開済みの先行例
+
+公開者は、この技術を **2022 年の時点ですでに GitHub で公開しています**。
+
+- 場所:[nameless911/kmk_firmware の `user_keymaps/nambox/HHK/code.py`(コミット `97420e1`)](https://github.com/nameless911/kmk_firmware/blob/97420e1/user_keymaps/nambox/HHK/code.py)
+- 中身(KMK ファームウェアのキーマップ):
+  - レイヤー0 の Alt の位置 = `KC.LM(2, KC.LALT)`(押している間、Alt を押しつつレイヤー2 に切り替え)
+  - レイヤー2 の Esc の位置 = `KC.ZKHK`(半角/全角)
+  - `KC.ZKHK` と `` ` ``(`KC_GRV`)は、PC に送るキーの番号(HID Usage `0x35`)が同じです。つまり、この文書の方法と同じ信号を出します
+- 日付:コミットの日時は **2022-07-28 02:05(日本時間)**。このリポジトリは公開リポジトリのフォークで、非公開にはできません。また **2022-08-14** に第三者から届いたプルリクエスト [#1](https://github.com/nameless911/kmk_firmware/pull/1) がこのコミットを含む形でマージされており、遅くともこの日には公衆が見られる状態だったことが確認できます
+
+この文書は、その先行例を説明し直し、変形まで含めて権利を放棄するために出しています。
+
 この宣言は法律相談ではありません。公開によって第三者の出願そのものを止めることはできませんが、この文書は、その出願の新規性・進歩性を判断するときの資料として使えます。
 
 ### Defensive publication (English summary)
@@ -124,4 +137,6 @@ VIA の文字が小さくて読みにくい、英語で分かりにくい、と�
 
 > On a keyboard, while a modifier key (e.g. Alt) is held, another key position (e.g. Esc) is remapped to a different output (e.g. the grave/backtick key) while the modifier itself keeps acting as a normal modifier, so that "modifier + that position" produces a target shortcut (e.g. Alt + `` ` ``, which toggles the Japanese IME on Windows with a US layout). This includes, without limitation: implementing it with a layer-mod key such as QMK `LM(layer, mods)` and a key placed on that layer; any modifier (Ctrl, Shift, Alt, GUI, left or right, or combinations); any key position and any output key or key combination; any target shortcut or input-method switch; and any implementation (keyboard firmware such as QMK / VIA / Vial / DMK / ZMK, inline HID remappers such as HID Remapper, host software such as AutoHotkey or Karabiner-Elements, or otherwise), including combinations with tap/hold behaviour, timers or other layer switching.
 
-The content of this repository is dedicated to the public domain under [CC0 1.0](LICENSE). The publisher will not file for, and will not assert, any patent, utility model, design or other industrial property right in this technique; anyone may practice it for any purpose, free of charge and without permission. The technique combines previously published features (QMK `LM()`, the Windows Alt + `` ` `` IME toggle), and the publisher does not claim to be its first inventor. This is not legal advice.
+The content of this repository is dedicated to the public domain under [CC0 1.0](LICENSE). The publisher will not file for, and will not assert, any patent, utility model, design or other industrial property right in this technique; anyone may practice it for any purpose, free of charge and without permission. The technique combines previously published features (QMK `LM()`, the Windows Alt + `` ` `` IME toggle), and the publisher does not claim to be its first inventor. The same technique was already published by the same publisher in 2022: [nameless911/kmk_firmware, `user_keymaps/nambox/HHK/code.py`, commit `97420e1`](https://github.com/nameless911/kmk_firmware/blob/97420e1/user_keymaps/nambox/HHK/code.py) (KMK firmware keymap; commit dated 2022-07-28 02:05 JST; publicly visible no later than 2022-08-14, when third-party pull request [#1](https://github.com/nameless911/kmk_firmware/pull/1) containing it was merged). It places `KC.LM(2, KC.LALT)` on the Alt position and `KC.ZKHK` on the Esc position of layer 2; `KC.ZKHK` sends the same HID usage (`0x35`) as the grave key.
+
+This is not legal advice.
