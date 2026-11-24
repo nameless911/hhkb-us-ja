@@ -16,6 +16,15 @@ HHKB Professional Classic と HHKB Professional HYBRID(Type-S 含む)を、US �
 | [VIA](https://www.usevia.app/) | ブラウザでキー配列を変える |
 | [nameless911/via-readable](https://github.com/nameless911/via-readable)(任意) | VIA の見た目を読みやすくして、HHKB メニューを日本語にする |
 
+## 導入に必要なこと(最初に読んでください)
+
+純正ファームの書き換えです。QMK や ZMK を知っている人ほど飛ばしがちなところだけ並べます。
+
+- **キャリブレーションを必ずやる**:HHKB は「押した / 離した」のスイッチではなく、キーの沈み具合を数値で読んでいます。その基準は1台ずつ違うので、測らないと一部のキーが反応しません。手を離してから開始 → 全キーを底まで → 再読み込みして `60/60` を確認([手順 2](#2-via-につないでキーを測定する必須))
+- **戻し方を先に知っておく**:裏の DIP スイッチ **SW6** で純正の書き込み係を起動できます([バックアップと戻し方](https://github.com/nameless911/dmk/blob/fix/windows-toolchain-exe/keyboards/hhkb/docs/en/backup-restore.md))
+- **Classic**:書き込みは公式の HHKB Keymap Tool で。書き込み後に「デバイスが見つからない」と出るのは正常です(USB の ID が変わるため)。`LM()` は VIA で自分で設定します。Type-S には入れられません
+- **Hybrid**:公式の更新ファイルに自分でパッチを当てます(PFU の Bluetooth ファームは配れないため)。Bluetooth は純正のままなので、ZMK などの知識は当てはまりません。ペアリングは純正と同じ **Fn + Q → Fn + Ctrl + 1〜4** です
+
 ## 仕組み
 
 QMK でおなじみの **Layer-Mod キー `LM(layer, mods)`** を使います。
