@@ -28,7 +28,7 @@ HHKB Professional Classic と HHKB Professional HYBRID(Type-S 含む)を、US �
 
 - **キャリブレーションを必ずやる**:HHKB は「押した / 離した」のスイッチではなく、キーの沈み具合を数値で読んでいます。その基準は1台ずつ違うので、測らないと一部のキーが反応しません。手を離してから開始 → 全キーを底まで → 再読み込みして `60/60` を確認([手順 2](#2-via-につないでキーを測定する必須))
 - **戻し方を先に知っておく**:裏の DIP スイッチ **SW6** で純正の書き込み係を起動できます([バックアップと戻し方](https://github.com/nameless911/dmk/blob/hhkb-hybrid-lm-v1/keyboards/hhkb/docs/en/backup-restore.md))
-- **Classic**:書き込みは公式の HHKB Keymap Tool で。書き込み後に「デバイスが見つからない」と出るのは正常です(USB の ID が変わるため)。`LM()` は VIA で自分で設定します。配っている `.hfb` は Classic(`AHHX01`)用で、Classic Type-S(`AHHS01`)用はまだ無い
+- **Classic**:書き込みは公式の HHKB Keymap Tool で。書き込み後に「デバイスが見つからない」と出るのは正常です(USB の ID が変わるため)。`LM()` は VIA で自分で設定します。配っている `.hfb` は Classic(`AHHX01`)用の `dmk-hhkb-classic-lm.hfb` と、Classic Type-S(`AHHS01`)用の `dmk-hhkb-classic-types-lm.hfb`([Release](https://github.com/nameless911/dmk/releases/tag/hhkb-classic-types-lm-v1)。ビルドのみ、実機では未確認)。型番が違うと書き込みツールにはじかれるので、機種に合ったほうを使う
 - **Hybrid**:公式の更新ファイルに自分でパッチを当てます(PFU の Bluetooth ファームは配れないため)。Bluetooth は純正のままなので、ZMK などの知識は当てはまりません。ペアリングは純正と同じ **Fn + Q → Fn + Ctrl + 1〜4** です
 
 ## 仕組み
@@ -77,10 +77,11 @@ Shift + A          → A(普通どおり)
 | 機種 | 型番の例 | モデル ID | 配るファーム | 実機での確認 |
 |---|---|---|---|---|
 | HHKB Professional Classic(US 配列) | PD-KB401B など | `AHHX01` | 書き込める `.hfb` | 確認済み |
+| HHKB Professional Classic Type-S(US 配列) | PD-KB401WSC、PD-KB401BSC、PD-KB401YSC | `AHHS01` | 書き込める `.hfb`([Release](https://github.com/nameless911/dmk/releases/tag/hhkb-classic-types-lm-v1)) | **ビルドのみ。実機では未確認** |
 | HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 確認済み(PD-KB800WS。USB 接続と、Bluetooth でのペアリング:iPad / iPhone) |
 | HHKB Professional HYBRID / Type-S(日本語配列) | PD-KB820 系 | `AHJX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | **ビルドのみ。実機では未確認** |
 
-Classic Type-S 用のファイルはまだ配っていません。ハードは Classic と同じ STM32 だが、型番(`AHHS01`)が違い、DMK では `type-s` ビルド(`HHKB_CLASSIC_TYPE_S`)が別にある(dmk の models.md)。
+Classic Type-S 用は、ハードが Classic と同じ STM32 なので、Classic 用と同じコミットを DMK の `type-s` ビルド(`HHKB_CLASSIC_TYPE_S`)でビルドしたもの。ファームの本体部分は Classic 用と同じで、違うのはファイルの最後の型番(`AHHS01` / A8.50)だけ。作者が Type-S を持っていないので、**ビルドのみ。実機では未確認**。
 
 - Windows(US 配列で Alt + `` ` `` が日本語入力の切り替えになる環境)
 - Chrome か Edge(VIA は WebHID を使うため)

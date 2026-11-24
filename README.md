@@ -35,7 +35,7 @@
 3. [キャリブレーション](#キャリブレーション)
 4. VIA でレイヤー0 の左 Alt を `LM(2,MOD_LALT)`、レイヤー2 の Esc を `` ` `` にして終わり
 
-Classic Type-S 用のファイルはまだありません(DMK 自体は Type-S にも対応しているので、欲しい人がいたら Type-S 用に設定したものを用意します)。
+Classic Type-S(`AHHS01`)の人は、1 で[こっち](https://github.com/nameless911/dmk/releases/tag/hhkb-classic-types-lm-v1)の `dmk-hhkb-classic-types-lm.hfb` を使ってください。残りの手順は同じです。**ビルドしただけで、実機では未確認です**(作者が Type-S を持っていないため)。試したら、動いたかどうか [Issue](https://github.com/nameless911/hhkb-us-ja/issues) で教えてもらえると助かります。
 
 ## キャリブレーション
 
