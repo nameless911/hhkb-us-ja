@@ -62,7 +62,7 @@ Shift + A          → A(普通どおり)
 | 機種 | 型番の例 | モデル ID | 配るファーム | 実機での確認 |
 |---|---|---|---|---|
 | HHKB Professional Classic(US 配列) | PD-KB401B など | `AHHX01` | 書き込める `.hfb` | 確認済み |
-| HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 書き込みまで確認済み(PD-KB800WS)。キーの動作は確認中 |
+| HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 確認済み(PD-KB800WS、USB 接続)。**Bluetooth 接続での動作は未確認** |
 | HHKB Professional HYBRID / Type-S(日本語配列) | PD-KB820 系 | `AHJX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | **ビルドのみ。実機では未確認** |
 
 Classic Type-S は、このまとめのファームでは使えません。
@@ -104,22 +104,52 @@ Hybrid の更新ファイルには PFU の Bluetooth 用ファームが入って
 
 詳しくは [install.md](https://github.com/nameless911/dmk/blob/feat/hhkb-layer-mod/keyboards/hhkb/docs/en/install.md) と [build.md](https://github.com/nameless911/dmk/blob/feat/hhkb-layer-mod/keyboards/hhkb/docs/en/build.md#hybrid-local-patching)。Hybrid を純正に戻すときは、SW6 で書き込み係を起動して、2 の公式ファイルをそのまま書き込みます。
 
-### 2. VIA で設定する
+### 2. VIA につないで、キーを測定する(必須)
+
+> [!IMPORTANT]
+> **DMK を入れたら、最初に必ずキーの測定(キャリブレーション)をしてください。** 測定しないと、工場出荷時の値が個体に合わず、**一部のキーが反応しない**ことがあります(作者の Hybrid Type-S で実際に起きました)。
 
 1. [usevia.app](https://www.usevia.app/) を開く
 2. 設定(歯車)→「Show Design tab」をオン → Design タブで `via.json` を読み込む
-   - HHKB メニューを日本語にしたいときは、via-readable の [`hhkb-ja/via.ja.json`](https://github.com/nameless911/via-readable/tree/main/hhkb-ja) を代わりに読み込む
+   - HHKB メニューを日本語にしたいときは、via-readable の [`hhkb-ja/via.ja.json`](https://github.com/nameless911/via-readable/tree/main/hhkb-ja) を代わりに読み込む(Classic 向けに作ったもの。Hybrid の新しい電源メニューは英語の `via.json` のほうが正確です)
 3. 「Authorize device」でキーボードを選ぶ(DMK は VIA の公式一覧に無いので、開くたびに必要です)
-4. **レイヤー0** の左 Alt をクリック → 下の一覧の「Any」→ `LM(2,MOD_LALT)` と入力 → 確認
+4. 構成(Configure)→ HHKB Settings → **Calibration** を開く
+5. **Use custom calibration** をオンにする
+6. **全部のキーから手を離して**、**Start calibration** を押す(指を乗せたままだと基準がずれます)
+7. **全部のキーを 1 つずつ、底まで押し込む**。「キーテスト」タブで **Test Matrix** をオンにすると、押し終わったキーが光るので押し忘れが分かります
+8. Calibration に戻って **Finish and save** を押す
+9. ページを再読み込みして、**Calibration status** が `60/60` になっているか確かめる(押した直後は古い表示のことがあります)
+
+> [!WARNING]
+> VIA を開いている間は、ほかのツール(`hhkb_flasher.py` 以外の自作スクリプトなど)からキーボードに話しかけないでください。返事が混ざって VIA の画面が真っ白になります。そうなったら VIA のタブを閉じて開き直してください。
+
+### 3. キーを設定する
+
+VIA の画面では、**左から 1 番目のタブがレイヤー0**、2 番目がレイヤー1(Fn)、3 番目がレイヤー2 です(0 から数えます)。
+
+#### Hybrid(US 配列)の場合:最初から入っています
+
+Hybrid US 配列用のファームは、**最初から次の配置になっています**。VIA で設定しなくてそのまま使えます。
+
+- 左右の Alt と Shift が `LM()`:**Alt + Esc の位置 → Alt + `` ` ``(日本語入力の切り替え)**、**Shift + Esc の位置 → `~`**
+- 純正と同じ Bluetooth のキー:**Fn + Q** でペアリング、**Fn + Ctrl + 1〜4** で接続先の切り替え、**Fn + Ctrl + 0** で USB と Bluetooth の切り替え(DMK では押すたびに入れ替わります)
+- Fn の矢印やファンクションキーは純正と同じ(Fn + `[` `;` `'` `/` で矢印など)
+
+> [!NOTE]
+> この初期配置が使われるのは、キーボードに**キー設定がまだ保存されていないとき**だけです。前に DMK を入れて VIA でキーを変えたことがある Hybrid では、保存済みの設定がそのまま使われます。その場合は、下の Classic と同じ手順で設定してください。
+
+#### Classic の場合:VIA で設定します
+
+1. **レイヤー0** の左 Alt をクリック → 下の一覧の「Any」→ `LM(2,MOD_LALT)` と入力 → 確認
    - 16 進で入れるなら `0x5044`
-5. **レイヤー2** の Esc の位置をクリック → `` ` ``(`KC_GRV`)を入れる
-6. レイヤー2 のほかのキーは、透過(▽ / `KC_TRNS`)にしておくのがおすすめ。左 Alt + ほかのキーが、普通の Alt + キーとして出ます
+2. **レイヤー2** の Esc の位置をクリック → `` ` ``(`KC_GRV`)を入れる
+3. レイヤー2 のほかのキーは、透過(▽ / `KC_TRNS`)にしておくのがおすすめ。左 Alt + ほかのキーが、普通の Alt + キーとして出ます
 
 これで「左 Alt + Esc の位置」で日本語入力が切り替わります。
 
 **(任意)Shift + Esc の位置で `~` を打つ**:レイヤー0 の左 Shift に `LM(2,MOD_LSFT)`(`0x5042`)、右 Shift に `LM(2,MOD_RSFT)`(`0x5052`)を入れます。レイヤー2 の Esc の位置はさっきの `` ` `` のままで、Shift + `` ` `` = `~` になります。
 
-### 3. VIA を読みやすくする(任意)
+### 4. VIA を読みやすくする(任意)
 
 VIA の文字が小さくて読みにくい、英語で分かりにくい、という人向けです。入れ方は [via-readable](https://github.com/nameless911/via-readable) の README を見てください(Chrome の拡張機能「Stylus」に CSS を入れるだけ)。
 
