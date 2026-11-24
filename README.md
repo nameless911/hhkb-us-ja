@@ -160,6 +160,7 @@ VIA の文字が小さくて読みにくい、英語で分かりにくい、と�
 - **Shift + Esc が要るとき**:Shift も LM にすると、Shift + Esc の位置は `~` になります(Chrome のタスクマネージャーなど、Shift + Esc を使うアプリでは押せなくなります)
 - **LM のキーを2つ同時に押したとき**:たとえば Shift と Alt の両方を LM にして同時に押し、片方だけ離すと、もう片方を押していてもレイヤー2 が解除されます。もう一度押し直せば元に戻ります
 - **左 Alt を押したまま LM のキーを離すと**:左 Alt を物理キーと LM で同時に押していた場合、LM を離した時点で Alt も離れた扱いになります
+- **Windows の PC にだけ Bluetooth で出てこない**:iPhone や iPad には出るのに Windows の「デバイスの追加」に出ないときは、HHKB ではなく PC 側のドライバーが原因のことがあります。デバイスマネージャーの「Bluetooth」で、アダプターが **Generic Bluetooth Adapter**(Microsoft の汎用ドライバー)になっていたら、PC メーカーのサポートページから Bluetooth ドライバーを入れて再起動してください。名前が「Realtek Bluetooth Adapter」のように、チップのメーカー名に変われば OK です。Realtek のチップは、汎用ドライバーのままだと周りの機器を探せないことがあります(ThinkPad X13 Gen 2 AMD で確認。ほかの Bluetooth 機器も同じように出てきません)
 
 ## クレジット
 
