@@ -28,7 +28,7 @@ HHKB Professional Classic と HHKB Professional HYBRID(Type-S 含む)を、US �
 
 - **キャリブレーションを必ずやる**:HHKB は「押した / 離した」のスイッチではなく、キーの沈み具合を数値で読んでいます。その基準は1台ずつ違うので、測らないと一部のキーが反応しません。手を離してから開始 → 全キーを底まで → 再読み込みして `60/60` を確認([手順 2](#2-via-につないでキーを測定する必須))
 - **戻し方を先に知っておく**:裏の DIP スイッチ **SW6** で純正の書き込み係を起動できます([バックアップと戻し方](https://github.com/nameless911/dmk/blob/hhkb-hybrid-lm-v1/keyboards/hhkb/docs/en/backup-restore.md))
-- **Classic**:書き込みは公式の HHKB Keymap Tool で。書き込み後に「デバイスが見つからない」と出るのは正常です(USB の ID が変わるため)。`LM()` は VIA で自分で設定します。Type-S には入れられません
+- **Classic**:書き込みは公式の HHKB Keymap Tool で。書き込み後に「デバイスが見つからない」と出るのは正常です(USB の ID が変わるため)。`LM()` は VIA で自分で設定します。配っている `.hfb` は Classic(`AHHX01`)用で、Classic Type-S(`AHHS01`)用はまだ無い
 - **Hybrid**:公式の更新ファイルに自分でパッチを当てます(PFU の Bluetooth ファームは配れないため)。Bluetooth は純正のままなので、ZMK などの知識は当てはまりません。ペアリングは純正と同じ **Fn + Q → Fn + Ctrl + 1〜4** です
 
 ## 仕組み
@@ -80,7 +80,7 @@ Shift + A          → A(普通どおり)
 | HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 確認済み(PD-KB800WS。USB 接続と、Bluetooth でのペアリング:iPad / iPhone) |
 | HHKB Professional HYBRID / Type-S(日本語配列) | PD-KB820 系 | `AHJX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | **ビルドのみ。実機では未確認** |
 
-Classic Type-S は、このまとめのファームでは使えません。
+Classic Type-S 用のファイルはまだ配っていません。ハードは Classic と同じ STM32 だが、型番(`AHHS01`)が違い、DMK では `type-s` ビルド(`HHKB_CLASSIC_TYPE_S`)が別にある(dmk の models.md)。
 
 - Windows(US 配列で Alt + `` ` `` が日本語入力の切り替えになる環境)
 - Chrome か Edge(VIA は WebHID を使うため)
