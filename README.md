@@ -62,7 +62,7 @@ Shift + A          → A(普通どおり)
 | 機種 | 型番の例 | モデル ID | 配るファーム | 実機での確認 |
 |---|---|---|---|---|
 | HHKB Professional Classic(US 配列) | PD-KB401B など | `AHHX01` | 書き込める `.hfb` | 確認済み |
-| HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 確認済み(PD-KB800WS、USB 接続)。**Bluetooth 接続での動作は未確認** |
+| HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 確認済み(PD-KB800WS。USB 接続と、Bluetooth でのペアリング:iPad / iPhone) |
 | HHKB Professional HYBRID / Type-S(日本語配列) | PD-KB820 系 | `AHJX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | **ビルドのみ。実機では未確認** |
 
 Classic Type-S は、このまとめのファームでは使えません。
@@ -132,7 +132,7 @@ VIA の画面では、**左から 1 番目のタブがレイヤー0**、2 番目
 Hybrid US 配列用のファームは、**最初から次の配置になっています**。VIA で設定しなくてそのまま使えます。
 
 - 左右の Alt と Shift が `LM()`:**Alt + Esc の位置 → Alt + `` ` ``(日本語入力の切り替え)**、**Shift + Esc の位置 → `~`**
-- 純正と同じ Bluetooth のキー:**Fn + Q** でペアリング、**Fn + Ctrl + 1〜4** で接続先の切り替え、**Fn + Ctrl + 0** で USB と Bluetooth の切り替え(DMK では押すたびに入れ替わります)
+- 純正と同じ Bluetooth のキー:**Fn + Q** のあと 30 秒以内に **Fn + Ctrl + 1〜4** でその番号にペアリング、ふだんの **Fn + Ctrl + 1〜4** は接続先の切り替え、**Fn + Ctrl + 0** で USB と Bluetooth の切り替え(DMK では押すたびに入れ替わります)
 - Fn の矢印やファンクションキーは純正と同じ(Fn + `[` `;` `'` `/` で矢印など)
 
 > [!NOTE]
