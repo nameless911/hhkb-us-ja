@@ -1,9 +1,10 @@
 # HHKB を US 配列のまま、日本語入力を快適に
 
-HHKB Professional Classic(US 配列)を、日本語を書く人が快適に使うための設定のまとめです。
+HHKB Professional Classic と HHKB Professional HYBRID(Type-S 含む)を、US 配列のまま、日本語を書く人が快適に使うための設定のまとめです。
 
 - **左 Alt を押しながら Esc の位置を押す → Alt + `` ` ``**(Windows の US 配列で、日本語入力のオン/オフ)
 - **左 Alt だけなら普通の Alt**(Alt+Tab なども今まで通り)
+- **Shift を押しながら Esc の位置を押す → `~`**(任意。左右どちらの Shift でも)
 - 右上の `` ` `` キーまで指を伸ばさなくていい
 - VIA の画面を日本語で読みやすくする(任意)
 
@@ -11,7 +12,7 @@ HHKB Professional Classic(US 配列)を、日本語を書く人が快適に使�
 
 | もの | 役割 |
 |---|---|
-| [nameless911/dmk](https://github.com/nameless911/dmk/releases/tag/hhkb-classic-lm-v1)(HHKB 用 DMK ファームのフォーク) | HHKB の中身を書き換えて、VIA で自由に配列を変えられるようにする。今回 `LM()` キーに対応させた |
+| [nameless911/dmk](https://github.com/nameless911/dmk)(HHKB 用 DMK ファームのフォーク。[Classic 用](https://github.com/nameless911/dmk/releases/tag/hhkb-classic-lm-v1) / [Hybrid 用](https://github.com/nameless911/dmk/releases/tag/hhkb-hybrid-lm-v1)) | HHKB の中身を書き換えて、VIA で自由に配列を変えられるようにする。今回 `LM()` キーに対応させた |
 | [VIA](https://www.usevia.app/) | ブラウザでキー配列を変える |
 | [nameless911/via-readable](https://github.com/nameless911/via-readable)(任意) | VIA の見た目を読みやすくして、HHKB メニューを日本語にする |
 
@@ -29,6 +30,10 @@ QMK でおなじみの **Layer-Mod キー `LM(layer, mods)`** を使います。
 左 Alt + Esc の位置 → Alt + `  → 日本語入力のオン/オフ
 左 Alt + Tab       → Alt + Tab(普通どおり)
 左 Alt だけ        → Alt(普通どおり)
+
+(任意)左右の Shift の位置 = LM(2, MOD_LSFT) / LM(2, MOD_RSFT)
+Shift + Esc の位置 → Shift + `  → ~
+Shift + A          → A(普通どおり)
 ```
 
 ## ほかのやり方との違い
@@ -52,8 +57,16 @@ QMK でおなじみの **Layer-Mod キー `LM(layer, mods)`** を使います。
 
 ## 必要なもの
 
-- **HHKB Professional Classic(US 配列 / PD-KB401B など / モデル `AHHX01`)**
-  - Type-S、JIS、Hybrid は、このまとめのファームでは**使えません**
+次のどれか:
+
+| 機種 | 型番の例 | モデル ID | 配るファーム | 実機での確認 |
+|---|---|---|---|---|
+| HHKB Professional Classic(US 配列) | PD-KB401B など | `AHHX01` | 書き込める `.hfb` | 確認済み |
+| HHKB Professional HYBRID / Type-S(US 配列) | PD-KB800B、PD-KB800WS など | `AHUX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | 書き込みまで確認済み(PD-KB800WS)。キーの動作は確認中 |
+| HHKB Professional HYBRID / Type-S(日本語配列) | PD-KB820 系 | `AHJX01` | STM32 の `.bin`(各自で公式ファイルにパッチ) | **ビルドのみ。実機では未確認** |
+
+Classic Type-S は、このまとめのファームでは使えません。
+
 - Windows(US 配列で Alt + `` ` `` が日本語入力の切り替えになる環境)
 - Chrome か Edge(VIA は WebHID を使うため)
 
@@ -64,6 +77,8 @@ QMK でおなじみの **Layer-Mod キー `LM(layer, mods)`** を使います。
 > [!WARNING]
 > ファームの書き込みは自己責任です。先に [バックアップと戻し方](https://github.com/nameless911/dmk/blob/fix/windows-toolchain-exe/keyboards/hhkb/docs/en/backup-restore.md) を読んでおいてください。
 
+#### Classic の場合
+
 1. [Release](https://github.com/nameless911/dmk/releases/tag/hhkb-classic-lm-v1) から `dmk-hhkb-classic-lm.hfb` と `via.json` をダウンロードする
 2. 書き込む
    - **純正ファームのままの HHKB**:公式の「HHKB Keymap Tool」で `.hfb` を開いて、普通のファーム更新と同じように書き込む
@@ -71,6 +86,23 @@ QMK でおなじみの **Layer-Mod キー `LM(layer, mods)`** を使います。
 3. 書き込みが終わると、キーボードは DMK として認識し直されます。公式ツールが「デバイスが見つからない」などと言っても、それは正常です(DMK は USB の ID が違うため)
 
 コマンドで書き込みたい人は、DMK の `tools/hhkb/hhkb_flasher.py` も使えます(詳しくは [install.md](https://github.com/nameless911/dmk/blob/fix/windows-toolchain-exe/keyboards/hhkb/docs/en/install.md))。
+
+#### Hybrid の場合
+
+Hybrid の更新ファイルには PFU の Bluetooth 用ファームが入っているので、出来上がった `.hfb` は配れません。公式の更新ファイルに、DMK の部分だけを自分で差し込みます(パソコンの中だけで済み、ファイルはどこにも送られません)。
+
+1. [Hybrid 用 Release](https://github.com/nameless911/dmk/releases/tag/hhkb-hybrid-lm-v1) から、配列に合う `.bin` と `via.json` をダウンロードする
+   - US 配列:`dmk-hhkb-hybrid-ansi-lm.bin`
+   - 日本語配列:`dmk-hhkb-hybrid-jis-lm.bin`(実機では未確認)
+2. PFU の公式サイトから、元になる更新ファイルを自分でダウンロードする
+   - US 配列:[`HHKB800_FW_A048.hfb`](https://happyhackingkb.com/download/)
+   - 日本語配列:[`HHKB820_FW_JP_A249.hfb`](https://happyhackingkb.com/jp/download/)
+3. [`hhkb.html`](https://github.com/nameless911/dmk/blob/feat/hhkb-layer-mod/tools/hhkb/hhkb.html) をダウンロードして Chrome か Edge で開く → 「Hybrid patching」タブで、2 の公式ファイルと 1 の `.bin` を選んで「Patch and download」
+4. できた `.hfb` を書き込む。`hhkb.html` の「Flash keyboard」タブ、公式の「HHKB Keymap Tool」、`hhkb_flasher.py` のどれでも書き込めます
+   - **純正ファームのまま**:そのまま書き込める
+   - **すでに DMK が入っている**:Classic と同じく SW6 で書き込み係を起動してから
+
+詳しくは [install.md](https://github.com/nameless911/dmk/blob/feat/hhkb-layer-mod/keyboards/hhkb/docs/en/install.md) と [build.md](https://github.com/nameless911/dmk/blob/feat/hhkb-layer-mod/keyboards/hhkb/docs/en/build.md#hybrid-local-patching)。Hybrid を純正に戻すときは、SW6 で書き込み係を起動して、2 の公式ファイルをそのまま書き込みます。
 
 ### 2. VIA で設定する
 
@@ -85,6 +117,8 @@ QMK でおなじみの **Layer-Mod キー `LM(layer, mods)`** を使います。
 
 これで「左 Alt + Esc の位置」で日本語入力が切り替わります。
 
+**(任意)Shift + Esc の位置で `~` を打つ**:レイヤー0 の左 Shift に `LM(2,MOD_LSFT)`(`0x5042`)、右 Shift に `LM(2,MOD_RSFT)`(`0x5052`)を入れます。レイヤー2 の Esc の位置はさっきの `` ` `` のままで、Shift + `` ` `` = `~` になります。
+
 ### 3. VIA を読みやすくする(任意)
 
 VIA の文字が小さくて読みにくい、英語で分かりにくい、という人向けです。入れ方は [via-readable](https://github.com/nameless911/via-readable) の README を見てください(Chrome の拡張機能「Stylus」に CSS を入れるだけ)。
@@ -93,11 +127,13 @@ VIA の文字が小さくて読みにくい、英語で分かりにくい、と�
 
 - **左 Alt を普通の Alt に戻す**:VIA でレイヤー0 の左 Alt に `KC_LALT` を入れる
 - **ファームを入れ直す / 純正に戻す**:上の SW6 の手順で書き込み係を起動して、入れたいファームを書き込む。詳しくは [backup-restore.md](https://github.com/nameless911/dmk/blob/fix/windows-toolchain-exe/keyboards/hhkb/docs/en/backup-restore.md)
+- **Shift + Esc が要るとき**:Shift も LM にすると、Shift + Esc の位置は `~` になります(Chrome のタスクマネージャーなど、Shift + Esc を使うアプリでは押せなくなります)
+- **LM のキーを2つ同時に押したとき**:たとえば Shift と Alt の両方を LM にして同時に押し、片方だけ離すと、もう片方を押していてもレイヤー2 が解除されます。もう一度押し直せば元に戻ります
 - **左 Alt を押したまま LM のキーを離すと**:左 Alt を物理キーと LM で同時に押していた場合、LM を離した時点で Alt も離れた扱いになります
 
 ## クレジット
 
-- [DMK](https://github.com/aroum/dmk) — aroum さん作のキーボードファーム(MIT License)。HHKB 対応もここから
+- [DMK](https://github.com/aroum/dmk) — aroum さん作のキーボードファーム(MIT License)。HHKB Classic / Hybrid 対応もここから
 - `LM(layer, mods)` の考え方と VIA のキーコード番号 — [QMK Firmware](https://github.com/qmk/qmk_firmware)
 - [VIA](https://www.usevia.app/)
 
@@ -122,7 +158,7 @@ VIA の文字が小さくて読みにくい、英語で分かりにくい、と�
 具体例と、同じ考え方の変形をすべて含みます。
 
 - 修飾キーの位置に「押している間、指定したレイヤーを有効にし、同時に修飾キーも押す」キー(QMK の `LM(layer, mods)` など)を置き、そのレイヤーの任意の位置に置き換え後のキーを置く方法
-- 修飾キーは Alt に限らず、Ctrl、Shift、GUI(Windows / Command)、左右どちらでもよい。複数の組み合わせでもよい
+- 修飾キーは Alt に限らず、Ctrl、Shift、GUI(Windows / Command)、左右どちらでもよい。複数の組み合わせでもよい。複数の修飾キーに同じ置き換えをしてもよい(例:Alt + Esc の位置 → Alt + `` ` ``、Shift + Esc の位置 → Shift + `` ` `` = `~`)
 - 置き換える位置は Esc に限らず、どのキーでもよい。置き換え後の出力は `` ` `` に限らず、どのキーやキーの組み合わせでもよい
 - 目的は日本語入力の切り替えに限らず、他言語の入力切り替えや、任意のショートカットでもよい
 - キーボードのファームウェア(QMK、VIA、Vial、DMK、ZMK など)、キーボードと PC の間に入れる変換器(HID Remapper など)、PC 側のソフト(AutoHotkey、Karabiner-Elements など)、そのほかどんな方法で作ってもよい
